@@ -14,7 +14,13 @@ type LocalFilesystemBackend struct {
 
 // NewLocalFilesystemBackend creates a new instance of LocalFilesystemBackend
 func NewLocalFilesystemBackend(rootDirectory string) *LocalFilesystemBackend {
-	b := &LocalFilesystemBackend{RootDirectory: rootDirectory}
+	gwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	b := &LocalFilesystemBackend{
+		RootDirectory: pathutil.Join(gwd,rootDirectory),
+	}
 	return b
 }
 
